@@ -13,6 +13,7 @@
   roles:
     - islandora-mysql
     - islandora-postgresql
+    - java
     - islandora-tomcat
     - islandora-fedora
     - islandora-drupal
