@@ -35,6 +35,8 @@
   TOMCAT_USER: "tomcat7"
   JAVA_HOME: "/usr/lib/jvm/java-8-oracle/jre"
   JAVA_OPT_MEMORY_MAX: "1g"  # was 1024m - setting should be no more than 50% of system memory (or 70)
+  TOMCAT_GUI_USER: "tomcatAdmin"
+  TOMCAT_GUI_PASSWORD: "correcthorsebatterystaple"
 
 # Fedora Settings:
   FEDORA_HOME: "/usr/local/fedora"
@@ -67,7 +69,7 @@
   DRUPAL_SITE_NAME: "Islandora Enterprise Stack"
   DRUPAL_SITE_MAIL: "no-reply@example.com"
   DRUPAL_ACCOUNT_MAIL: "admin@example.com"
-  DRUPAL_TIMEZONE: "America/Chicago"
+  DRUPAL_TIMEZONE: "America/Denver"
 
 # Solr Settings:
   SOLR_VERSION: 4.2.0

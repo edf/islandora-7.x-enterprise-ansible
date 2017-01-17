@@ -59,3 +59,8 @@
     dest: /etc/init.d/tomcat7
     mode: "u=rwx,g=rx,o=rx"
 
+- name: insert Tomcat GUI user 
+  blockinfile:
+    dest: "{{ TOMCAT_HOME }}/conf/tomcat-users.xml"
+    insertbefore: "</tomcat-users>"
+    content: '<user username="{{ TOMCAT_GUI_USER }}" password="{{ TOMCAT_GUI_PASSWORD }}" roles="manager-gui"/>'
