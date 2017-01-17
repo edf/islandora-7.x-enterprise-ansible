@@ -13,7 +13,7 @@
 - name: "Download Fedora v{{ FEDORA_VERSION }}"
   get_url:
     url: "https://github.com/fcrepo3/fcrepo/releases/download/v{{ FEDORA_VERSION }}/fcrepo-installer-{{ FEDORA_VERSION }}.jar"
-    dest: "/tmp/fcrepo-installer-{{ FEDORA_VERSION }}.jar"
+    dest: "{{ DOWNLOAD_DIR }}/fcrepo-installer-{{ FEDORA_VERSION }}.jar"
 
 - name: Prepare the local environment variables
   template:
@@ -23,23 +23,23 @@
 - name: Create an "install.properties" file | MySQL
   template:
     src: install.properties.mysql.j2 
-    dest: /tmp/install.properties
+    dest: "{{ DOWNLOAD_DIR }}/install.properties"
   when: USE_POSTGRESQL == "false"
   register: install_mysql_properties
 
 - name: Create an "install.properties" file | PostgreSQL
   template:
     src: install.properties.postgresql.j2 
-    dest: /tmp/install.properties
+    dest: "{{ DOWNLOAD_DIR }}/install.properties"
   when: USE_POSTGRESQL == "true"
   register: install_postgres_properties
 
 - name: Install Fedora
   shell: "{{ item }}"
   with_items:
-    - "echo 'yes' | java -jar /tmp/fcrepo-installer-{{ FEDORA_VERSION }}.jar /tmp/install.properties"
+    - "echo 'yes' | java -jar {{ DOWNLOAD_DIR }}/fcrepo-installer-{{ FEDORA_VERSION }}.jar {{ DOWNLOAD_DIR }}/install.properties"
   args:
-    chdir: /tmp/
+    chdir: "{{ DOWNLOAD_DIR }}/"
   when: install_mysql_properties.changed or install_postgres_properties.changed
 
 - name: Set namespace id for pids
@@ -101,11 +101,11 @@
 - name: "Download Djatoka"
   get_url:
     url: "http://downloads.sourceforge.net/project/djatoka/djatoka/1.1/adore-djatoka-1.1.tar.gz"
-    dest: /tmp/adore-djatoka-1.1.tar.gz
+    dest: "{{ DOWNLOAD_DIR }}/adore-djatoka-1.1.tar.gz"
     timeout: 120
 
 - name: Untar Djatoka
-  shell: "tar -xzf /tmp/adore-djatoka-1.1.tar.gz -C {{ DJATOKA_HOME }} --strip-components=1"
+  shell: "tar -xzf {{ DOWNLOAD_DIR }}/adore-djatoka-1.1.tar.gz -C {{ DJATOKA_HOME }} --strip-components=1"
   args:
     executable: /bin/bash
     creates: "{{ DJATOKA_HOME }}/bin/Linux-x86-64/kdu_compress"
@@ -239,4 +239,4 @@
 #   wait_for:
 #     path: "{{ TOMCAT_HOME }}/logs/catalina.out"
 #     search_regex: "INFO: Server startup in"
-
+    
