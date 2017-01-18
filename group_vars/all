@@ -6,7 +6,7 @@
   USE_POSTGRESQL: "{{ ansible_env.USE_POSTGRESQL | default('false') }}"
   PID_NAME_SPACE: "{{ ansible_env.PID_NAME_SPACE | default('changeme') }}"
   INSTALL_COMPLETE_MODULE: "{{ ansible_env.INSTALL_COMPLETE_MODULE | default('false') }}"
-  DOWNLOAD_DIR: "{{ ansible_env.DOWNLOAD_DIR | default('/tmp/download') }}"
+  DOWNLOAD_DIR: "{{ ansible_env.DOWNLOAD_DIR | default('/tmp/downloads') }}"
 
 # MySQL Settings:
   MYSQL_HOSTNAME: "localhost"
