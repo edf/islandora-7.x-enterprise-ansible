@@ -10,6 +10,10 @@
     state: directory
     mode: 0755
 
+# create timestamp
+- shell: 'date +%Y-%m%d-%H%M-%S-%5N'
+  register: current_run_timestamp
+
 - name: Install git
   apt:
     pkg: git
@@ -48,6 +52,9 @@
   args:
     chdir: "{{ DOWNLOAD_DIR }}/"
   when: install_mysql_properties.changed or install_postgres_properties.changed
+
+- name: rename install.properties
+  command: mv "{{ DOWNLOAD_DIR }}/install.properties"  "{{ DOWNLOAD_DIR }}/install.properties-{{ current_run_timestamp.stdout }}"
 
 - name: Set namespace id for pids
   replace:
