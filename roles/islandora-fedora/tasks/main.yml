@@ -3,6 +3,13 @@
 # --volume: {{ FEDORA_HOME }}
 # --volume: {{ FEDORA_HOME }}/data
 # --volume: {{ FEDORA_HOME }}/server/config
+
+# create a directory if it doesn't exist
+- file:
+    path: /tmp/downloads
+    state: directory
+    mode: 0755
+
 - name: Install git
   apt:
     pkg: git
