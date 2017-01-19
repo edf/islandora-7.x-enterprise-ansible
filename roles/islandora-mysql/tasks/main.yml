@@ -40,6 +40,7 @@
   service:
     name: mysql
     state: started
+    enabled: true
   become: true   
 
 - name: Restart mysql server
@@ -91,17 +92,17 @@
         login_password: "{{ MYSQL_ROOT_PASSWORD }}"
   when: USE_POSTGRESQL == "false"
 
-#- block:
-#    - name: Remove database
-#      mysql_db:
-#        name: "{{ FEDORA_DATABASE_NAME }}"
-#        state: absent
-#        login_password: "{{ MYSQL_ROOT_PASSWORD }}"
-#
-#    - name: Remove Fedora database user
-#      mysql_user:
-#        name: "{{ FEDORA_DATABASE_USER }}"
-#        state: absent
-#        login_password: "{{ MYSQL_ROOT_PASSWORD }}"
-#  when: USE_POSTGRESQL == "true"
+- block:
+    - name: Remove database
+      mysql_db:
+        name: "{{ FEDORA_DATABASE_NAME }}"
+        state: absent
+        login_password: "{{ MYSQL_ROOT_PASSWORD }}"
+
+    - name: Remove Fedora database user
+      mysql_user:
+        name: "{{ FEDORA_DATABASE_USER }}"
+        state: absent
+        login_password: "{{ MYSQL_ROOT_PASSWORD }}"
+  when: USE_POSTGRESQL == "true"
 
